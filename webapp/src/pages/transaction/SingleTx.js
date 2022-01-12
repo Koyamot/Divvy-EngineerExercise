@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { objectOf, string, bool, number, shape, func } from 'prop-types'
+import { useMutation } from '@apollo/client'
+import { objectOf, string, bool, number, shape, func, object } from 'prop-types'
 import { css } from '@emotion/core'
 import EditTx from '../../components/transactions/EditTx'
 import { DisplayTx } from '../../components/transactions/DisplayTx'
+import DeleteTransaction from '../../gql/deleteTransaction.gql'
+import GetTransactions from '../../gql/transactions.gql'
 
 const styles = css`
   height: 400px;
@@ -18,6 +21,19 @@ const styles = css`
 
 const SingleTx = ({ tx, exitModal }) => {
   const [disabled, setDisabled] = useState(true)
+  const [deleteTransaction] = useMutation(DeleteTransaction, {
+    refetchQueries: [
+      {
+        query: GetTransactions
+      }
+    ]
+  })
+
+  const handleDelete = id => {
+    deleteTransaction({ variables: { id: tx.id } })
+    exitModal()
+  }
+
   return (
     <div className='tx-modal' css={styles}>
       <h1>
@@ -25,12 +41,15 @@ const SingleTx = ({ tx, exitModal }) => {
       </h1>
       {disabled ? (
         <>
-          <DisplayTx tx={tx} /> <button onClick={exitModal}>Cancel</button> <button onClick={() => setDisabled(false)}>Edit</button>
+          <DisplayTx tx={tx} />
+          <div className='button-controls'>
+            <button onClick={exitModal}>Cancel</button> <button onClick={() => setDisabled(false)}>Edit</button>
+            <button onClick={() => handleDelete(tx.id)}>Delete</button>
+          </div>
         </>
       ) : (
         <>
-          <EditTx tx={tx} />
-          <button onClick={exitModal}>Cancel</button> <button>Save</button>
+          <EditTx exitModal={exitModal} tx={tx} />
         </>
       )}
     </div>
@@ -50,7 +69,7 @@ SingleTx.propTypes = {
       debit: bool,
       credit: bool,
       amount: number,
-      __typename: string
+      __typename: object
     })
   )
 }
