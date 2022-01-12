@@ -3,8 +3,8 @@ import { useMutation } from '@apollo/client'
 import AddTransaction from '../../gql/addTransaction.gql'
 import GetTransactions from '../../gql/transactions.gql'
 
-// import { css } from '@emotion/core'
-// import styled from '@emotion/styled'
+import { css } from '@emotion/core'
+import { func } from 'prop-types'
 
 const initialState = {
   user_id: '',
@@ -15,7 +15,19 @@ const initialState = {
   amount: ''
 }
 
-const AddTx = () => {
+const styles = css`
+  height: 400px;
+  background: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 16px;
+
+  span {
+    font-size: 16px;
+  }
+`
+
+const AddTx = ({ exitModal }) => {
   const [values, setValues] = useState({ ...initialState })
   const [addTransaction] = useMutation(AddTransaction, {
     refetchQueries: [
@@ -26,7 +38,6 @@ const AddTx = () => {
   })
 
   const handleChange = e => {
-    console.log(e.target.value)
     setValues({
       ...values,
       [e.target.name]: e.target.value
@@ -48,6 +59,7 @@ const AddTx = () => {
         }
       })
       setValues({ ...initialState })
+      exitModal()
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err)
@@ -55,7 +67,7 @@ const AddTx = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form css={styles} onSubmit={handleSubmit}>
       <label>
         User ID:
         <input name='user_id' onChange={handleChange} type='text' value={values.user_id} />
@@ -69,22 +81,49 @@ const AddTx = () => {
         <input name='merchant_id' onChange={handleChange} type='text' value={values.merchant_id} />
       </label>
       <label>
+        Amount
+        <input
+          id='amount'
+          max={9999}
+          min={0}
+          name='amount'
+          onChange={handleChange}
+          type='number'
+          value={values.amount}
+        />
+      </label>
+      <label>
         Debit
-        <input checked={values.debit ? 'checked' : null} name='pay' onChange={handleChange} type='radio' value='debit' />
+        <input
+          checked={values.debit ? 'checked' : null}
+          name='pay'
+          onChange={handleChange}
+          type='radio'
+          value='debit'
+        />
       </label>
       <label>
         Credit
-        <input checked={values.credit ? 'checked' : null} name='pay' onChange={handleChange} type='radio' value='credit' />
+        <input
+          checked={values.credit ? 'checked' : null}
+          name='pay'
+          onChange={handleChange}
+          type='radio'
+          value='credit'
+        />
       </label>
-      <label>
-        Amount
-        <input onChange={handleChange} type='number' value={values.amount} />
-      </label>
-      <button to='/Account' type='submit'>
-        Submit
-      </button>
+      <div className='button-group'>
+        <button onClick={exitModal} type='submit'>
+          Cancel
+        </button>
+        <button type='submit'>Submit</button>
+      </div>
     </form>
   )
 }
 
 export default AddTx
+
+AddTx.propTypes = {
+  exitModal: func
+}

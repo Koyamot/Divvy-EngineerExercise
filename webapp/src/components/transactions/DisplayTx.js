@@ -1,23 +1,35 @@
 import React from 'react'
-import { objectOf, string, bool, number, shape } from 'prop-types'
+import { objectOf, string, bool, number, shape, object } from 'prop-types'
 
 export const DisplayTx = ({ tx }) => {
   const { user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
   return (
-    <div>
-      <input disabled type='text' value={userId} />
-      <input disabled type='text' value={description} />
-      <input disabled type='text' value={merchantId} />
+    <>
       <label>
-        debit
-        <input checked={debit ? 'checked' : null} disabled name='radio' type='radio' />
+        User ID:
+        <input disabled name='user_id' placeholder={userId} type='text' value={userId} />
       </label>
       <label>
-        credit
-        <input checked={credit ? 'checked' : null} disabled name='radio' type='radio' />
+        description:
+        <input disabled name='description' placeholder={description} type='text' value={description} />
       </label>
-      <input disabled type='number' value={amount} />
-    </div>
+      <label>
+        Merchant ID:
+        <input disabled name='merchant_id' placeholder={merchantId} type='text' value={merchantId} />
+      </label>
+      <label>
+        Amount
+        <input disabled id='amount' name='amount' placeholder={amount} type='number' value={amount} />
+      </label>
+      <label>
+        Debit
+        <input checked={debit ? 'checked' : null} disabled name='pay' type='radio' value='debit' />
+      </label>
+      <label>
+        Credit
+        <input checked={credit ? 'checked' : null} disabled name='pay' type='radio' value='credit' />
+      </label>
+    </>
   )
 }
 DisplayTx.propTypes = {
@@ -29,7 +41,8 @@ DisplayTx.propTypes = {
       merchant_id: string,
       debit: bool,
       credit: bool,
-      amount: number
+      amount: number,
+      __typename: object
     })
   )
 }

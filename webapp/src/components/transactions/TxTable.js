@@ -3,6 +3,7 @@ import { arrayOf, string, bool, number, shape } from 'prop-types'
 import { css } from '@emotion/core'
 import Modal from '../modal/modal'
 import SingleTx from '../../pages/transaction/SingleTx'
+import AddTx from './AddTx'
 
 const styles = css`
   width: 100%;
@@ -24,16 +25,10 @@ const styles = css`
     border: none;
   }
 
-  .table-data:nth-of-type(even) {
+  .table-data{
     background: #fff;
     &:hover {
-      background: pink;
-    }
-  }
-  .table-data:nth-of-type(odd) {
-    background: #ccc;
-    &:hover {
-      background: blue;
+      background: #eaebff;
     }
   }
 
@@ -57,19 +52,26 @@ const styles = css`
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
 export function TxTable ({ data }) {
-  const [showTx, setShowTx] = useState({})
-  const [visible, setVisible] = useState(false)
+  const [singleTx, setSingleTx] = useState({})
+  const [editVisible, setEditVisible] = useState(false)
+  const [addVisible, setAddVisible] = useState(false)
 
   const handleEdit = tx => {
-    setVisible(true)
-    setShowTx(tx)
+    setEditVisible(true)
+    setSingleTx(tx)
   }
 
   return (
     <>
-      <Modal isVisible={visible}>
-        <SingleTx exitModal={() => setVisible(false)} setVisible={setVisible} tx={showTx} />
+      <Modal isVisible={editVisible}>
+        <SingleTx exitModal={() => setEditVisible(false)} setVisible={setEditVisible} tx={singleTx} />
       </Modal>
+      <Modal isVisible={addVisible}>
+        <AddTx exitModal={() => setAddVisible(false)} setVisible={setAddVisible} tx={singleTx} />
+      </Modal>
+      <div className='add-button'>
+        <button onClick={() => setAddVisible(true)}>Add Transaction</button>
+      </div>
       <table css={styles}>
         <tbody>
           <tr className='header'>
@@ -84,7 +86,15 @@ export function TxTable ({ data }) {
           {data.map(tx => {
             const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
             return (
-              <tr className='table-data' data-testid={`transaction-${id}`} key={`transaction-${id}`} onClick={() => handleEdit(tx)} onKeyDown={() => handleEdit(tx)} role='button' tabIndex={id}>
+              <tr
+                className='table-data'
+                data-testid={`transaction-${id}`}
+                key={`transaction-${id}`}
+                onClick={() => handleEdit(tx)}
+                onKeyDown={() => handleEdit(tx)}
+                role='button'
+                tabIndex={id}
+              >
                 <td data-testid={makeDataTestId(id, 'id')}>{id}</td>
                 <td data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
                 <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
