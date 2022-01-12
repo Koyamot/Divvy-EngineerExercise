@@ -21,7 +21,11 @@ const NavBar = () => {
 
 const navStyle = css`
   grid-row: 1;
-
+  padding: 8px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
   & > ul {
     display: flex;
     flex-direction: row;

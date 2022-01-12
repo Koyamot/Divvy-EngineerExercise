@@ -1,18 +1,24 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { css } from '@emotion/core'
 import { Home } from './pages/home'
 import NavBar from './components/nav/navbar'
 import Account from './pages/account/account-page'
+import EditTx from './components/transactions/EditTx'
 
 function AppRouter () {
   return (
     <Router>
+      <NavBar />
       <div css={layoutStyle}>
-        <NavBar />
         <div className='main-content' css={contentStyle}>
-          <Route component={Home} exact path='/' />
-          <Route component={Account} exact path='/Account' />
+          <Switch>
+            <Route component={Home} exact path='/' />
+            <Route component={Account} exact path='/Account' />
+            <Route exact path='/Transactions/:id'>
+              <EditTx />
+            </Route>
+          </Switch>
         </div>
       </div>
     </Router>
@@ -22,9 +28,11 @@ function AppRouter () {
 export default AppRouter
 
 const layoutStyle = css`
-    display: grid;
-    grid-row-gap: 24px;
-    padding: 8px;
+  display: grid;
+  grid-row-gap: 24px;
+  width: 80%;
+  margin: 0 auto;
+  padding: 8px;
 `
 
 const contentStyle = css`
