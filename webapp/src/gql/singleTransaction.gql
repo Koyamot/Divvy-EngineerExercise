@@ -1,5 +1,6 @@
-query GetTransactions {
-    transactions {
+
+query GetTransaction($id: String) {
+    transaction(id: $id) {
         id
         user_id
         description
@@ -8,5 +9,4 @@ query GetTransactions {
         credit
         amount
     }
-
 }
