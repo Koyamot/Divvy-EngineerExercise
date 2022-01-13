@@ -1,0 +1,5 @@
+{
+  "welcome": "Hello Fellow Boov!!",
+  "langCount_one": "Language Change: {{ count}} time!",
+  "langCount_other": "Language Change: {{ count }} times!"
+}
