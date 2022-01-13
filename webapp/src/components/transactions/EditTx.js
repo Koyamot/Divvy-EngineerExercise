@@ -72,7 +72,7 @@ const EditTx = ({ tx, exitModal }) => {
   }
   const { user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={() => { if (window.confirm('Edits to this transaction cannot be undone. Do you wish to proceed?')) handleSubmit() }}>
       <label>
         User ID:
         <input

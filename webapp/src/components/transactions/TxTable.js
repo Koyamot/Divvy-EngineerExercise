@@ -25,10 +25,16 @@ const styles = css`
     border: none;
   }
 
-  .table-data{
-    background: #fff;
+  .table-data:nth-of-type(odd) {
+    background: #f7f7ff;
     &:hover {
-      background: #eaebff;
+      background: #ebecff;
+    }
+  }
+  .table-data:nth-of-type(even) {
+    background: #cacbf3;
+    &:hover {
+      background: #c3c4ff;
     }
   }
 

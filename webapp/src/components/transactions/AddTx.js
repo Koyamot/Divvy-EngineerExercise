@@ -21,7 +21,6 @@ const styles = css`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   padding: 16px;
-
   span {
     font-size: 16px;
   }
@@ -84,8 +83,7 @@ const AddTx = ({ exitModal }) => {
         Amount
         <input
           id='amount'
-          max={9999}
-          min={0}
+          min={1}
           name='amount'
           onChange={handleChange}
           type='number'

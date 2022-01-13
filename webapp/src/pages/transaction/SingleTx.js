@@ -44,7 +44,7 @@ const SingleTx = ({ tx, exitModal }) => {
           <DisplayTx tx={tx} />
           <div className='button-controls'>
             <button onClick={exitModal}>Cancel</button> <button onClick={() => setDisabled(false)}>Edit</button>
-            <button onClick={() => handleDelete(tx.id)}>Delete</button>
+            <button onClick={() => { if (window.confirm('Are you sure you wish to delete this transaction?')) handleDelete(tx.id) }}>Delete</button>
           </div>
         </>
       ) : (

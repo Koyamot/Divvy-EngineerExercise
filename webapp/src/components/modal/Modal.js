@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { css } from '@emotion/core'
 import { bool, node } from 'prop-types'
 
