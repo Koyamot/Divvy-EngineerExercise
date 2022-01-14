@@ -7,8 +7,8 @@ const Modal = ({ children, isVisible }) => {
     <>
       {isVisible && (
         <div className='outer-modal' css={outer}>
-          <div className='middle' css={middle}>
-            <div css={modal}>{children}</div>
+          <div className='middle-modal' css={middle}>
+            <div className='inner-modal' css={modal}>{children}</div>
           </div>
         </div>
       )}
@@ -27,6 +27,7 @@ const outer = css`
   left: 0;
   height: 100%;
   width: 100%;
+  background: rgb(0 0 0 / 80%);
 `
 
 const modal = css`
@@ -34,6 +35,7 @@ const modal = css`
   margin-right: auto;
   width: 600px;
   background-color: white;
+  padding: 60px;
 `
 
 export default Modal

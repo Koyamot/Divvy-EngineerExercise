@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import Modal from '../modal/modal'
 import SingleTx from '../../pages/transaction/SingleTx'
 import AddTx from './AddTx'
@@ -27,19 +28,6 @@ const styles = css`
     border: none;
   }
 
-  .table-data:nth-of-type(odd) {
-    background: #f7f7ff;
-    &:hover {
-      background: #ebecff;
-    }
-  }
-  .table-data:nth-of-type(even) {
-    background: #cacbf3;
-    &:hover {
-      background: #c3c4ff;
-    }
-  }
-
   .header {
     font-weight: bold;
     width: 100%;
@@ -55,6 +43,14 @@ const styles = css`
   .checkmark {
     text-align: center;
   }
+`
+
+const ButtonContainer = styled.div`
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: center;
+margin-bottom: 24px;
 `
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
@@ -78,16 +74,18 @@ export function TxTable ({ data }) {
       <Modal isVisible={addVisible}>
         <AddTx exitModal={() => setAddVisible(false)} setVisible={setAddVisible} tx={singleTx} />
       </Modal>
-      <div className='add-button'>
-        <button onClick={() => setAddVisible(true)}>Add Transaction</button>
-      </div>
-      <div className='roman-translate'>
-        {isRoman ? (
-          <button onClick={() => setIsRoman(!isRoman)}>Regular Numbers</button>
-        ) : (
-          <button onClick={() => setIsRoman(!isRoman)}>Roman Numerals</button>
-        )}
-      </div>
+      <ButtonContainer>
+        <div className='add-button'>
+          <button onClick={() => setAddVisible(true)}>Add Transaction</button>
+        </div>
+        <div className='roman-translate'>
+          {isRoman ? (
+            <button onClick={() => setIsRoman(!isRoman)}>Regular Numbers</button>
+          ) : (
+            <button onClick={() => setIsRoman(!isRoman)}>Roman Numerals</button>
+          )}
+        </div>
+      </ButtonContainer>
       <table css={styles}>
         <tbody>
           <tr className='header'>

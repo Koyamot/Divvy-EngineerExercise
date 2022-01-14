@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { objectOf, string, bool, number, shape, func, object } from 'prop-types'
-import { css } from '@emotion/core'
 import EditTx from '../../components/transactions/EditTx'
 import { DisplayTx } from '../../components/transactions/DisplayTx'
 import DeleteTransaction from '../../gql/deleteTransaction.gql'
 import GetTransactions from '../../gql/transactions.gql'
+import { css } from '@emotion/core'
 
-const styles = css`
-  height: 400px;
-  background: #fff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  padding: 16px;
-
+const txHeader = css`
+  margin-top: 0;
   span {
-    font-size: 16px;
+    font-size: 20px;
   }
+`
+
+const buttonControls = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `
 
 const SingleTx = ({ tx, exitModal }) => {
@@ -35,16 +36,22 @@ const SingleTx = ({ tx, exitModal }) => {
   }
 
   return (
-    <div className='tx-modal' css={styles}>
-      <h1>
+    <>
+      <h1 css={txHeader}>
         Transaction: <span>{tx.id}</span>
       </h1>
       {disabled ? (
         <>
           <DisplayTx tx={tx} />
-          <div className='button-controls'>
+          <div className='button-controls' css={buttonControls}>
             <button onClick={exitModal}>Cancel</button> <button onClick={() => setDisabled(false)}>Edit</button>
-            <button onClick={() => { if (window.confirm('Are you sure you wish to delete this transaction?')) handleDelete(tx.id) }}>Delete</button>
+            <button
+              onClick={() => {
+                if (window.confirm('Are you sure you wish to delete this transaction?')) handleDelete(tx.id)
+              }}
+            >
+              Delete
+            </button>
           </div>
         </>
       ) : (
@@ -52,7 +59,7 @@ const SingleTx = ({ tx, exitModal }) => {
           <EditTx exitModal={exitModal} tx={tx} />
         </>
       )}
-    </div>
+    </>
   )
 }
 

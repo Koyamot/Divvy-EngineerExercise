@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import AddTransaction from '../../gql/addTransaction.gql'
 import GetTransactions from '../../gql/transactions.gql'
-
-import { css } from '@emotion/core'
 import { func } from 'prop-types'
+import * as globalstyles from '../../styles/GlobalStyles'
 
 const initialState = {
   user_id: '',
@@ -14,17 +13,6 @@ const initialState = {
   credit: false,
   amount: ''
 }
-
-const styles = css`
-  height: 400px;
-  background: #fff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  padding: 16px;
-  span {
-    font-size: 16px;
-  }
-`
 
 const AddTx = ({ exitModal }) => {
   const [values, setValues] = useState({ ...initialState })
@@ -66,50 +54,53 @@ const AddTx = ({ exitModal }) => {
   }
 
   return (
-    <form css={styles} onSubmit={handleSubmit}>
-      <label>
-        User ID:
-        <input name='user_id' onChange={handleChange} type='text' value={values.user_id} />
-      </label>
-      <label>
-        description:
-        <input name='description' onChange={handleChange} type='text' value={values.description} />
-      </label>
-      <label>
-        Merchant ID:
-        <input name='merchant_id' onChange={handleChange} type='text' value={values.merchant_id} />
-      </label>
-      <label>
-        Amount
-        <input
-          id='amount'
-          min={1}
-          name='amount'
-          onChange={handleChange}
-          type='number'
-          value={values.amount}
-        />
-      </label>
-      <label>
-        Debit
-        <input
-          checked={values.debit ? 'checked' : null}
-          name='pay'
-          onChange={handleChange}
-          type='radio'
-          value='debit'
-        />
-      </label>
-      <label>
-        Credit
-        <input
-          checked={values.credit ? 'checked' : null}
-          name='pay'
-          onChange={handleChange}
-          type='radio'
-          value='credit'
-        />
-      </label>
+    <form css={globalstyles.formstyles} onSubmit={handleSubmit}>
+      <h1>Add Transaction</h1>
+      <div className='id-type'>
+        <label>
+          User ID:
+          <input name='user_id' onChange={handleChange} type='text' value={values.user_id} />
+        </label>
+        <label>
+          Merchant ID:
+          <input name='merchant_id' onChange={handleChange} type='text' value={values.merchant_id} />
+        </label>
+      </div>
+      <div className='description'>
+        <label>
+          Description:
+          <input name='description' onChange={handleChange} type='text' value={values.description} />
+        </label>
+      </div>
+      <div className='payment-container'>
+        <label>
+          Amount:
+          <input id='amount' min={1} name='amount' onChange={handleChange} type='number' value={values.amount} />
+        </label>
+        <div className='payment-type'>
+          <p>Payment Type:</p>
+          <label>
+            Debit
+            <input
+              checked={values.debit ? 'checked' : null}
+              name='pay'
+              onChange={handleChange}
+              type='radio'
+              value='debit'
+            />
+          </label>
+          <label>
+            Credit
+            <input
+              checked={values.credit ? 'checked' : null}
+              name='pay'
+              onChange={handleChange}
+              type='radio'
+              value='credit'
+            />
+          </label>
+        </div>
+      </div>
       <div className='button-group'>
         <button onClick={exitModal} type='submit'>
           Cancel
