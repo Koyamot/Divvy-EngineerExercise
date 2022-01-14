@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/core'
 import LangSwitcher from '../i18next/LangSwitcher'
+import { string } from 'prop-types'
 
-const NavBar = () => {
+const NavBar = ({ language }) => {
+  console.log('navbar', language)
   return (
     <div css={navBar}>
       <div className='logo'>
@@ -14,7 +16,7 @@ const NavBar = () => {
         />
         <h1>The Penny Pincher</h1>
       </div>
-      <LangSwitcher />
+      <LangSwitcher lang={language} />
       <nav css={navStyle}>
         <ul>
           <li>
@@ -31,6 +33,12 @@ const NavBar = () => {
     </div>
   )
 }
+
+NavBar.propTypes = {
+  language: string
+}
+
+export default NavBar
 
 const navBar = css`
   display: flex;
@@ -74,4 +82,3 @@ const navStyle = css`
     margin-left: 16px;
   }
 `
-export default NavBar
