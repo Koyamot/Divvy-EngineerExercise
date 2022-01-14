@@ -1,5 +1,7 @@
 {
   "welcome": "Hello Fellow Boov!!",
   "langCount_one": "Language Change: {{ count}} time!",
-  "langCount_other": "Language Change: {{ count }} times!"
+  "langCount_other": "Language Change: {{ count }} times!",
+  "en_select": "( ͡• ‿‿ ͡•)=//",
+  "bv_select": "¯|__( ͡👁️ ⏏ ͡👁️)_|¯"
 }

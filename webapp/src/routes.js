@@ -1,20 +1,17 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { css, Global } from '@emotion/core'
+import { css } from '@emotion/core'
 import { Home } from './pages/home'
 import NavBar from './components/nav/navbar'
 import Account from './pages/account/account-page'
 import EditTx from './components/transactions/EditTx'
-import { globalStyles } from './styles/GlobalStyles'
-import Cookies from 'js-cookie'
+import LangSwitcher from './components/i18next/LangSwitcher'
 
 function AppRouter () {
-  const lang = Cookies.get('i18next')
   return (
     <Router>
-      <Global styles={globalStyles} />
-      <div className={`globalstyles ${lang}-lang`}>
-        <NavBar language={lang} />
+      <LangSwitcher>
+        <NavBar />
         <div css={layoutStyle}>
           <div className='main-content' css={contentStyle}>
             <Switch>
@@ -29,7 +26,7 @@ function AppRouter () {
             </Switch>
           </div>
         </div>
-      </div>
+      </LangSwitcher>
     </Router>
   )
 }
@@ -41,7 +38,6 @@ const layoutStyle = css`
   grid-row-gap: 24px;
   width: 80%;
   margin: 0 auto;
-  padding: 8px;
 `
 
 const contentStyle = css`
