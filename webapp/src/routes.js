@@ -10,7 +10,6 @@ import Cookies from 'js-cookie'
 
 function AppRouter () {
   const lang = Cookies.get('i18next')
-  console.log('this is language/routes :', lang)
   return (
     <Router>
       <Global styles={globalStyles} />
