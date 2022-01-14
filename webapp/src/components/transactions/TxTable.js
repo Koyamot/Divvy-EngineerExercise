@@ -4,6 +4,8 @@ import { css } from '@emotion/core'
 import Modal from '../modal/modal'
 import SingleTx from '../../pages/transaction/SingleTx'
 import AddTx from './AddTx'
+import RomanTranslate from '../roman/RomanTranslate'
+import RomanTest from '../roman/RomanTest'
 
 const styles = css`
   width: 100%;
@@ -61,6 +63,7 @@ export function TxTable ({ data }) {
   const [singleTx, setSingleTx] = useState({})
   const [editVisible, setEditVisible] = useState(false)
   const [addVisible, setAddVisible] = useState(false)
+  const [isRoman, setIsRoman] = useState(false)
 
   const handleEdit = tx => {
     setEditVisible(true)
@@ -77,6 +80,13 @@ export function TxTable ({ data }) {
       </Modal>
       <div className='add-button'>
         <button onClick={() => setAddVisible(true)}>Add Transaction</button>
+      </div>
+      <div className='roman-translate'>
+        {isRoman ? (
+          <button onClick={() => setIsRoman(!isRoman)}>Regular Numbers</button>
+        ) : (
+          <button onClick={() => setIsRoman(!isRoman)}>Roman Numerals</button>
+        )}
       </div>
       <table css={styles}>
         <tbody>
@@ -102,7 +112,7 @@ export function TxTable ({ data }) {
                 tabIndex={id}
               >
                 <td data-testid={makeDataTestId(id, 'id')}>{id}</td>
-                <td data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
+                <td data-testid={makeDataTestId(id, 'userId')}>{isRoman ? RomanTest(userId) : userId}</td>
                 <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
                 <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                 <td className='checkmark' data-testid={makeDataTestId(id, 'debit')}>
@@ -111,7 +121,7 @@ export function TxTable ({ data }) {
                 <td className='checkmark' data-testid={makeDataTestId(id, 'credit')}>
                   {credit ? '✓' : ''}
                 </td>
-                <td data-testid={makeDataTestId(id, 'amount')}>{amount}</td>
+                <td data-testid={makeDataTestId(id, 'amount')}>{isRoman ? RomanTranslate(amount) : amount}</td>
               </tr>
             )
           })}
