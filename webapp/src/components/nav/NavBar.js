@@ -1,41 +1,35 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/core'
-import LangSwitcher from '../i18next/LangSwitcher'
-import { string } from 'prop-types'
 
-const NavBar = ({ language }) => {
-  console.log('navbar', language)
+const NavBar = () => {
   return (
-    <div css={navBar}>
-      <div className='logo'>
-        <img
-          alt='Coin'
-          css={logo}
-          src='https://www.pngitem.com/pimgs/m/137-1378758_gold-coin-png-circle-transparent-png.png'
-        />
-        <h1>The Penny Pincher</h1>
+    <div className='nav-container'>
+      <div css={navBar}>
+        <div className='logo'>
+          <img
+            alt='Coin'
+            css={logo}
+            src='https://www.pngitem.com/pimgs/m/137-1378758_gold-coin-png-circle-transparent-png.png'
+          />
+          <h1>The Penny Pincher</h1>
+        </div>
+        <nav css={navStyle}>
+          <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
+            <li>
+              <Link to='/Account'>My Account</Link>
+            </li>
+            <li>
+              <Link to='/BoomBox'>Boom Box</Link>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <LangSwitcher lang={language} />
-      <nav css={navStyle}>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/Account'>My Account</Link>
-          </li>
-          <li>
-            <Link to='/BoomBox'>Boom Box</Link>
-          </li>
-        </ul>
-      </nav>
     </div>
   )
-}
-
-NavBar.propTypes = {
-  language: string
 }
 
 export default NavBar
@@ -45,7 +39,7 @@ const navBar = css`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 16px 40px;
+  margin: 16px 0;
 
   h1 {
     margin: 0;
@@ -66,7 +60,7 @@ const logo = css`
 
 const navStyle = css`
   grid-row: 1;
-  padding: 8px;
+  margin-right: 40px;
   a {
     text-decoration: none;
     color: black;
