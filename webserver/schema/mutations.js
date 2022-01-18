@@ -34,7 +34,7 @@ const mutation = new GraphQLObjectType({
       },
       /* eslint-disable-next-line camelcase */
       resolve (_, { id, user_id, description, merchant_id, debit, credit, amount }) {
-        return (TransactionModel.findByIdAndUpdate(id, { user_id, description, merchant_id, debit, credit, amount }))
+        return (TransactionModel.findByIdAndUpdate(id, { id, user_id, description, merchant_id, debit, credit, amount }))
       }
     },
     deleteTransaction: {

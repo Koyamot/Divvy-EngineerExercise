@@ -14,12 +14,6 @@ const txHeader = css`
   }
 `
 
-const buttonControls = css`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`
-
 const SingleTx = ({ tx, exitModal }) => {
   const [disabled, setDisabled] = useState(true)
   const [deleteTransaction] = useMutation(DeleteTransaction, {
@@ -43,9 +37,13 @@ const SingleTx = ({ tx, exitModal }) => {
       {disabled ? (
         <>
           <DisplayTx tx={tx} />
-          <div className='button-controls' css={buttonControls}>
-            <button onClick={exitModal}>Cancel</button> <button onClick={() => setDisabled(false)}>Edit</button>
+          <div className='button-controls'>
+            <button className='hvr-ripple-out' onClick={exitModal}>
+              Cancel
+            </button>{' '}
+            <button className='hvr-ripple-out' onClick={() => setDisabled(false)}>Edit</button>
             <button
+              className='hvr-ripple-out'
               onClick={() => {
                 if (window.confirm('Are you sure you wish to delete this transaction?')) handleDelete(tx.id)
               }}

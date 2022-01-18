@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { objectOf, string, bool, number, shape, object } from 'prop-types'
 import * as globalstyles from '../../styles/GlobalStyles'
 
 export const DisplayTx = ({ tx }) => {
-  const { user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
+  const [payType, setPayType] = useState(tx.debit ? 'debit' : 'credit')
+  const { user_id: userId, description, merchant_id: merchantId, amount } = tx
   return (
     <div css={globalstyles.formstyles}>
       <div className='id-type'>
@@ -28,14 +29,13 @@ export const DisplayTx = ({ tx }) => {
           <input disabled id='amount' name='amount' placeholder={amount} type='number' value={amount} />
         </label>
         <div className='payment-type'>
-          <p>Payment Type:</p>
           <label>
-            Debit
-            <input checked={debit ? 'checked' : null} disabled name='pay' type='radio' value='debit' />
-          </label>
-          <label>
-            Credit
-            <input checked={credit ? 'checked' : null} disabled name='pay' type='radio' value='credit' />
+            {' '}
+            Payment Type:
+            <select disabled name='paytype-select' onBlur={e => setPayType(e.target.value)} value={payType}>
+              <option value='debit'>Debit</option>
+              <option value='credit'>Credit</option>
+            </select>
           </label>
         </div>
       </div>

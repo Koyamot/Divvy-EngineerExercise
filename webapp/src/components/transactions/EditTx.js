@@ -3,10 +3,12 @@ import { objectOf, string, bool, number, shape, object, func } from 'prop-types'
 import { useMutation } from '@apollo/client'
 import EditTransaction from '../../gql/editTransaction.gql'
 import GetTransactions from '../../gql/transactions.gql'
+import * as globalstyles from '../../styles/GlobalStyles'
 
 const EditTx = ({ tx, exitModal }) => {
-  const [updatedValues, setUpdatedValues] = useState({ tx })
-  const [editTransaction] = useMutation(EditTransaction, {
+  const [updatedValues, setUpdatedValues] = useState({ ...tx })
+  const [payType, setPayType] = useState(tx.debit ? 'debit' : 'credit')
+  const [editTransaction, { loading, error }] = useMutation(EditTransaction, {
     refetchQueries: [
       {
         query: GetTransactions
@@ -14,119 +16,110 @@ const EditTx = ({ tx, exitModal }) => {
     ]
   })
 
-  const handleChange = e => {
-    if (e.target.name === 'pay' && e.target.value === 'debit') {
-      setUpdatedValues({
-        ...updatedValues,
-        [e.target.name]: e.target.value,
-        credit: false,
-        debit: true
-      })
-    } else {
-      setUpdatedValues({
-        ...updatedValues,
-        [e.target.name]: e.target.value,
-        credit: false,
-        debit: true
-      })
-    }
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>There was an error with the edit</div>
+
+  const handleChange = ({ target: { name, value } }) => {
+    setUpdatedValues({
+      ...updatedValues,
+      [name]: value
+    })
   }
 
-  const handleRadio = e => {
-    if (e.target.name === 'pay' && e.target.value === 'debit') {
-      setUpdatedValues({
-        ...updatedValues,
-        credit: false,
-        debit: true
-      })
-    } else {
-      setUpdatedValues({
-        ...updatedValues,
-        credit: true,
-        debit: false
-      })
-    }
+  const onSelect = ({ target: { value } }) => {
+    setPayType(value)
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
-    try {
-      await editTransaction({
-        variables: {
-          ...updatedValues,
-          id: tx.id,
-          user_id: updatedValues.user_id ? updatedValues.user_id : userId,
-          description: updatedValues.description ? updatedValues.description : description,
-          merchant_id: updatedValues.merchant_id ? updatedValues.merchant_id : merchantId,
-          debit: updatedValues.debit,
-          credit: updatedValues.credit,
-          amount: parseFloat(updatedValues.amount) ? parseFloat(updatedValues.amount) : parseFloat(amount)
-        }
-      })
-      setUpdatedValues({ updatedValues })
-      exitModal()
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err)
-    }
+    editTransaction({
+      variables: {
+        ...updatedValues,
+        id: updatedValues.id,
+        user_id: updatedValues.user_id,
+        description: updatedValues.description,
+        merchant_id: updatedValues.merchant_id,
+        debit: payType === 'debit',
+        credit: payType === 'credit',
+        amount: parseFloat(updatedValues.amount)
+      }
+    })
+    setUpdatedValues({ ...tx })
+    exitModal()
   }
-  const { user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
+  const { user_id: userId, description, merchant_id: merchantId, amount } = tx
   return (
-    <form onSubmit={() => { if (window.confirm('Edits to this transaction cannot be undone. Do you wish to proceed?')) handleSubmit() }}>
-      <label>
-        User ID:
-        <input
-          name='user_id'
-          onChange={handleChange}
-          placeholder={userId}
-          type='text'
-          value={updatedValues.user_id ? updatedValues.user_id : userId}
-        />
-      </label>
-      <label>
-        description:
-        <input
-          name='description'
-          onChange={handleChange}
-          placeholder={description}
-          type='text'
-          value={updatedValues.description ? updatedValues.description : description}
-        />
-      </label>
-      <label>
-        Merchant ID:
-        <input
-          name='merchant_id'
-          onChange={handleChange}
-          placeholder={merchantId}
-          type='text'
-          value={updatedValues.merchant_id ? updatedValues.merchant_id : merchantId}
-        />
-      </label>
-      <label>
-        Amount
-        <input
-          id='amount'
-          name='amount'
-          onChange={handleChange}
-          placeholder={amount}
-          type='number'
-          value={updatedValues.amount ? updatedValues.amount : amount}
-        />
-      </label>
-      <label>
-        Debit
-        <input checked={debit ? 'checked' : null} name='pay' onChange={handleRadio} type='radio' value='debit' />
-      </label>
-      <label>
-        Credit
-        <input checked={credit ? 'checked' : null} name='pay' onChange={handleRadio} type='radio' value='credit' />
-      </label>
-      <div className='button-group'>
-        <button onClick={exitModal} type='submit'>
+    <form css={globalstyles.formstyles} onSubmit={handleSubmit}>
+      <div className='id-type'>
+        <label>
+          User ID:
+          <input
+            name='user_id'
+            onChange={handleChange}
+            placeholder={userId}
+            type='text'
+            value={updatedValues.user_id}
+          />
+        </label>
+        <label>
+          Merchant ID:
+          <input
+            name='merchant_id'
+            onChange={handleChange}
+            placeholder={merchantId}
+            type='text'
+            value={updatedValues.merchant_id}
+          />
+        </label>
+      </div>
+      <div className='description'>
+        <label>
+          description:
+          <input
+            name='description'
+            onChange={handleChange}
+            placeholder={description}
+            type='text'
+            value={updatedValues.description}
+          />
+        </label>
+      </div>
+      <div className='payment-container'>
+        <label>
+          Amount
+          <input
+            id='amount'
+            name='amount'
+            onChange={handleChange}
+            placeholder={amount}
+            type='number'
+            value={updatedValues.amount}
+          />
+        </label>
+        <div className='payment-type'>
+          <label>
+            {' '}
+            Payment Type:
+            <select
+              name='paytype-select'
+              onBlur={e => setPayType(e.target.value)}
+              onChange={onSelect}
+              required
+              value={payType}
+            >
+              <option value='debit'>Debit</option>
+              <option value='credit'>Credit</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div className='button-controls'>
+        <button className='hvr-ripple-out' onClick={exitModal} type='submit'>
           Cancel
         </button>
-        <button type='submit'>Submit</button>
+        <button className='hvr-ripple-out' type='submit'>
+          Submit
+        </button>
       </div>
     </form>
   )

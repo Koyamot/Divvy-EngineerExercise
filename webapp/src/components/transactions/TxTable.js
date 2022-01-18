@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import { css } from '@emotion/core'
-import styled from '@emotion/styled'
 import Modal from '../modal/modal'
 import SingleTx from '../../pages/transaction/SingleTx'
 import AddTx from './AddTx'
@@ -45,14 +44,6 @@ const styles = css`
   }
 `
 
-const ButtonContainer = styled.div`
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: center;
-margin-bottom: 24px;
-`
-
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
 export function TxTable ({ data }) {
@@ -74,18 +65,24 @@ export function TxTable ({ data }) {
       <Modal isVisible={addVisible}>
         <AddTx exitModal={() => setAddVisible(false)} setVisible={setAddVisible} tx={singleTx} />
       </Modal>
-      <ButtonContainer>
+      <div className='button-controls'>
         <div className='add-button'>
-          <button onClick={() => setAddVisible(true)}>Add Transaction</button>
+          <button className='hvr-ripple-out' onClick={() => setAddVisible(true)}>
+            Add Transaction
+          </button>
         </div>
         <div className='roman-translate'>
           {isRoman ? (
-            <button onClick={() => setIsRoman(!isRoman)}>Regular Numbers</button>
+            <button className='hvr-ripple-out' onClick={() => setIsRoman(!isRoman)}>
+              Regular Numbers
+            </button>
           ) : (
-            <button onClick={() => setIsRoman(!isRoman)}>Roman Numerals</button>
+            <button className='hvr-ripple-out' onClick={() => setIsRoman(!isRoman)}>
+              Roman Numerals
+            </button>
           )}
         </div>
-      </ButtonContainer>
+      </div>
       <table css={styles}>
         <tbody>
           <tr className='header'>

@@ -15,6 +15,7 @@ const initialState = {
 }
 
 const AddTx = ({ exitModal }) => {
+  const [payType, setPayType] = useState('debit')
   const [values, setValues] = useState({ ...initialState })
   const [addTransaction] = useMutation(AddTransaction, {
     refetchQueries: [
@@ -24,11 +25,15 @@ const AddTx = ({ exitModal }) => {
     ]
   })
 
-  const handleChange = e => {
+  const handleChange = ({ target: { name, value } }) => {
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [name]: value
     })
+  }
+
+  const onSelect = ({ target: { value } }) => {
+    setPayType(value)
   }
 
   const handleSubmit = async e => {
@@ -40,8 +45,8 @@ const AddTx = ({ exitModal }) => {
           user_id: values.user_id,
           description: values.description,
           merchant_id: values.merchant_id,
-          debit: values.debit,
-          credit: values.credit,
+          debit: payType === 'debit',
+          credit: payType === 'credit',
           amount: parseFloat(values.amount)
         }
       })
@@ -78,34 +83,29 @@ const AddTx = ({ exitModal }) => {
           <input id='amount' min={1} name='amount' onChange={handleChange} type='number' value={values.amount} />
         </label>
         <div className='payment-type'>
-          <p>Payment Type:</p>
           <label>
-            Debit
-            <input
-              checked={values.debit ? 'checked' : null}
-              name='pay'
-              onChange={handleChange}
-              type='radio'
-              value='debit'
-            />
-          </label>
-          <label>
-            Credit
-            <input
-              checked={values.credit ? 'checked' : null}
-              name='pay'
-              onChange={handleChange}
-              type='radio'
-              value='credit'
-            />
+            {' '}
+            Payment Type:
+            <select
+              name='paytype-select'
+              onBlur={e => setPayType(e.target.value)}
+              onChange={onSelect}
+              required
+              value={payType}
+            >
+              <option value='debit'>Debit</option>
+              <option value='credit'>Credit</option>
+            </select>
           </label>
         </div>
       </div>
-      <div className='button-group'>
-        <button onClick={exitModal} type='submit'>
+      <div className='button-controls'>
+        <button className='hvr-ripple-out' onClick={exitModal} type='submit'>
           Cancel
         </button>
-        <button type='submit'>Submit</button>
+        <button className='hvr-ripple-out' type='submit'>
+          Submit
+        </button>
       </div>
     </form>
   )
