@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '@emotion/core'
+import { useTranslation } from 'react-i18next'
 
 const NavBar = () => {
+  const { t } = useTranslation()
   return (
     <div className='nav-container'>
       <div css={navBar}>
@@ -12,7 +14,7 @@ const NavBar = () => {
             css={logo}
             src='https://www.pngitem.com/pimgs/m/137-1378758_gold-coin-png-circle-transparent-png.png'
           />
-          <h1>The Penny Pincher</h1>
+          <h1>{t('title')}</h1>
         </div>
         <nav css={navStyle}>
           <ul>

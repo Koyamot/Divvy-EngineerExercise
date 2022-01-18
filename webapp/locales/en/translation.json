@@ -3,5 +3,7 @@
   "langCount_one": "You have change the language {{ count }} time.",
   "langCount_other": "You have change the language {{ count }} times.",
   "en_select": "English",
-  "bv_select": "Boov"
+  "bv_select": "Boov",
+  "title": "The Penny Pincher",
+  "shameless_plug": "Shameless Plug"
 }
