@@ -1,9 +1,10 @@
 import React from 'react'
+import Home from './Home'
 
-export function Home () {
+export function HomePage () {
   return (
-    <div>
-      <h1>Welcome to your Page</h1>
+    <div className='App'>
+      <Home />
     </div>
   )
 }

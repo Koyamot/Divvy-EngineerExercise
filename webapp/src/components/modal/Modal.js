@@ -28,6 +28,7 @@ const outer = css`
   height: 100%;
   width: 100%;
   background: rgb(0 0 0 / 80%);
+  z-index: 1;
 `
 
 const modal = css`
