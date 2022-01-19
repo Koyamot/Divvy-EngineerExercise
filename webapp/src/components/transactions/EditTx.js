@@ -51,56 +51,63 @@ const EditTx = ({ tx, exitModal }) => {
   return (
     <form css={globalstyles.formstyles} onSubmit={handleSubmit}>
       <div className='id-type'>
-        <label>
+        <label htmlFor='user_id'>
           User ID:
           <input
             name='user_id'
             onChange={handleChange}
             placeholder={userId}
+            required
             type='text'
             value={updatedValues.user_id}
           />
         </label>
-        <label>
+        <label htmlFor='merchant_id'>
           Merchant ID:
           <input
+            id='user_id'
             name='merchant_id'
             onChange={handleChange}
             placeholder={merchantId}
+            required
             type='text'
             value={updatedValues.merchant_id}
           />
         </label>
       </div>
       <div className='description'>
-        <label>
-          description:
+        <label htmlFor='description_id'>
+          Description:
           <input
+            id='description'
             name='description'
             onChange={handleChange}
             placeholder={description}
+            required
             type='text'
             value={updatedValues.description}
           />
         </label>
       </div>
       <div className='payment-container'>
-        <label>
+        <label htmlFor='amount'>
           Amount
           <input
             id='amount'
             name='amount'
             onChange={handleChange}
             placeholder={amount}
+            required
             type='number'
             value={updatedValues.amount}
           />
         </label>
         <div className='payment-type'>
-          <label>
+          <label htmlFor='pay-type'>
             {' '}
             Payment Type:
             <select
+              id='pay-type'
               name='paytype-select'
               onBlur={e => setPayType(e.target.value)}
               onChange={onSelect}

@@ -62,31 +62,32 @@ const AddTx = ({ exitModal }) => {
     <form css={globalstyles.formstyles} onSubmit={handleSubmit}>
       <h1>Add Transaction</h1>
       <div className='id-type'>
-        <label>
+        <label htmlFor='user_id'>
           User ID:
-          <input name='user_id' onChange={handleChange} type='text' value={values.user_id} />
+          <input id='user_id' name='user_id' onChange={handleChange} required type='text' value={values.user_id} />
         </label>
-        <label>
+        <label htmlFor='merchant_id'>
           Merchant ID:
-          <input name='merchant_id' onChange={handleChange} type='text' value={values.merchant_id} />
+          <input id='merchant_id' name='merchant_id' onChange={handleChange} required type='text' value={values.merchant_id} />
         </label>
       </div>
       <div className='description'>
-        <label>
+        <label htmlFor='description_id'>
           Description:
-          <input name='description' onChange={handleChange} type='text' value={values.description} />
+          <input id='description' name='description' onChange={handleChange} required type='text' value={values.description} />
         </label>
       </div>
       <div className='payment-container'>
-        <label>
+        <label htmlFor='amount'>
           Amount:
-          <input id='amount' min={1} name='amount' onChange={handleChange} type='number' value={values.amount} />
+          <input id='amount' min={1} name='amount' onChange={handleChange} required type='number' value={values.amount} />
         </label>
         <div className='payment-type'>
-          <label>
+          <label htmlFor='pay-type'>
             {' '}
             Payment Type:
             <select
+              id='pay-type'
               name='paytype-select'
               onBlur={e => setPayType(e.target.value)}
               onChange={onSelect}
@@ -100,10 +101,10 @@ const AddTx = ({ exitModal }) => {
         </div>
       </div>
       <div className='button-controls'>
-        <button className='hvr-ripple-out' onClick={exitModal} type='submit'>
+        <button className='hvr-ripple-out' data-testid='cancel-button' onClick={exitModal} type='submit'>
           Cancel
         </button>
-        <button className='hvr-ripple-out' type='submit'>
+        <button className='hvr-ripple-out' data-testid='submit-button' type='submit'>
           Submit
         </button>
       </div>
