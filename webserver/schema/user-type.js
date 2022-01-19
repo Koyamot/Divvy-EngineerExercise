@@ -18,10 +18,11 @@ const UserType = new GraphQLObjectType({
     email: { type: GraphQLString },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
+    employee_id: { type: GraphQLString },
     transactions: {
       type: new GraphQLList(TransactionType),
       resolve (parentValue, args) {
-        return Transaction.find({ user_id: args.id }).populate('transaction')
+        return Transaction.find({ employee_id: args.user_id }).populate('transaction')
       }
     }
   })
