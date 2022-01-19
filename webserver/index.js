@@ -11,7 +11,7 @@ const pinoHttp = require('pino-http')
 
 module.exports = function main (options, cb) {
   // Set default options
-  const ready = cb || function () { }
+  const ready = cb || function () {}
   const opts = Object.assign(
     {
       // Default options
@@ -27,7 +27,7 @@ module.exports = function main (options, cb) {
   let serverStarted = false
   let serverClosing = false
 
-  const MONGO_URI = 'mongodb://localhost:27017/graphql'
+  const MONGO_URI = 'mongodb+srv://koyamot:Raytrac3d@cluster0.kkfnu.mongodb.net/divvydb?retryWrites=true&w=majority'
 
   mongoose.Promise = global.Promise
   mongoose.connect(MONGO_URI, {
@@ -53,6 +53,7 @@ module.exports = function main (options, cb) {
       })
     }
   }
+
   process.on('uncaughtException', unhandledError)
   process.on('unhandledRejection', unhandledError)
   process.on('SIGTERM', unhandledError)
@@ -65,11 +66,11 @@ module.exports = function main (options, cb) {
   app.use(cors())
   app.options('*', cors())
 
-  app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.static(path.join(__dirname, 'views')))
 
   // Template engine
   app.engine('html', ejs.renderFile)
-  app.set('views', path.join(__dirname, 'public'))
+  app.set('views', path.join(__dirname, 'views'))
   app.set('view engine', 'html')
 
   // Common middleware
@@ -90,7 +91,8 @@ module.exports = function main (options, cb) {
   app.use(function fourOhFourHandler (req, res, next) {
     next(httpErrors(404, `Route not found: ${req.url}`))
   })
-  app.use(function fiveHundredHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+  app.use(function fiveHundredHandler (err, req, res, next) {
+    // eslint-disable-line no-unused-vars
     if (err.status >= 500) {
       logger.error(err)
     }
