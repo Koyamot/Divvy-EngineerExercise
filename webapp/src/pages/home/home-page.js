@@ -3,7 +3,7 @@ import Home from './Home'
 
 export function HomePage () {
   return (
-    <div className='App'>
+    <div className='Home'>
       <Home />
     </div>
   )
