@@ -1,9 +1,12 @@
 {
+  "company_name": "The Penny Pincher",
   "welcome": "Welcome!!!",
   "langCount_one": "You have change the language {{ count }} time.",
   "langCount_other": "You have change the language {{ count }} times.",
   "en_select": "English",
   "bv_select": "Boov",
-  "title": "The Penny Pincher",
-  "shameless_plug": "Shameless Plug"
+  "shameless_plug": "Shameless Plug",
+  "home_p_a": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea quod dignissimos at quasi. Non dicta sed quam vero nisi possimus ex dolor iste, vel reiciendis, odit consequuntur obcaecati, est inventore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo excepturi recusandae tempore reiciendis accusantium. Neque nemo cum, dolor eum facilis suscipit modi amet sit provident? Mollitia ut numquam pariatur libero?",
+  "home_p_b": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea quod dignissimos at quasi. Non dicta sed quam vero nisi possimus ex dolor iste, vel reiciendis, odit consequuntur obcaecati, est inventore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo excepturi recusandae tempore reiciendis accusantium. Neque nemo cum, dolor eum facilis suscipit modi amet sit provident? Mollitia ut numquam pariatur libero?",
+  "home_p_c": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea quod dignissimos at quasi. Non dicta sed quam vero nisi possimus ex dolor iste, vel reiciendis, odit consequuntur obcaecati, est inventore. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo excepturi recusandae tempore reiciendis accusantium. Neque nemo cum, dolor eum facilis suscipit modi amet sit provident? Mollitia ut numquam pariatur libero?"
 }

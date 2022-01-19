@@ -14,7 +14,7 @@ const NavBar = () => {
             css={logo}
             src='https://www.pngitem.com/pimgs/m/137-1378758_gold-coin-png-circle-transparent-png.png'
           />
-          <h1>{t('title')}</h1>
+          <h1>{t('company_name')}</h1>
         </div>
         <nav css={navStyle}>
           <ul>
@@ -23,9 +23,6 @@ const NavBar = () => {
             </li>
             <li>
               <Link to='/Account'>My Account</Link>
-            </li>
-            <li>
-              <Link to='/BoomBox'>Boom Box</Link>
             </li>
           </ul>
         </nav>
