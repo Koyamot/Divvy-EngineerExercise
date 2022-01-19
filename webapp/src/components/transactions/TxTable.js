@@ -44,13 +44,13 @@ const styles = css`
   }
 `
 
-const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
-
 export function TxTable ({ data }) {
   const [singleTx, setSingleTx] = useState({})
   const [editVisible, setEditVisible] = useState(false)
   const [addVisible, setAddVisible] = useState(false)
   const [isRoman, setIsRoman] = useState(false)
+
+  const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
   const handleEdit = tx => {
     setEditVisible(true)
@@ -67,17 +67,17 @@ export function TxTable ({ data }) {
       </Modal>
       <div className='button-controls'>
         <div className='add-button'>
-          <button className='hvr-ripple-out' onClick={() => setAddVisible(true)}>
+          <button className='hvr-ripple-out' data-testid='add-transaction' onClick={() => setAddVisible(true)}>
             Add Transaction
           </button>
         </div>
         <div className='roman-translate'>
           {isRoman ? (
-            <button className='hvr-ripple-out' onClick={() => setIsRoman(!isRoman)}>
+            <button className='hvr-ripple-out' data-testid='roman-numerals' onClick={() => setIsRoman(!isRoman)}>
               Regular Numbers
             </button>
           ) : (
-            <button className='hvr-ripple-out' onClick={() => setIsRoman(!isRoman)}>
+            <button className='hvr-ripple-out' data-testid='roman-numerals' onClick={() => setIsRoman(!isRoman)}>
               Roman Numerals
             </button>
           )}
@@ -85,7 +85,7 @@ export function TxTable ({ data }) {
       </div>
       <table css={styles}>
         <tbody>
-          <tr className='header'>
+          <tr className='header' data-testid='table-header'>
             <td>ID</td>
             <td>User ID</td>
             <td>Description</td>
