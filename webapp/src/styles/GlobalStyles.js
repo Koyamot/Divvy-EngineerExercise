@@ -57,6 +57,10 @@ export const globalStyles = css`
         background: #c3c4ff;
       }
     }
+
+    .hvr-ripple-out:before {
+      border: none;
+    }
   }
 
   .bv-lang {
@@ -96,6 +100,24 @@ export const globalStyles = css`
         transition: 0.3s;
       }
     }
+
+    div.button {
+      margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      margin-top: 40px;
+      cursor: pointer;
+      width: 200px;
+      height: 80px;
+      background: none;
+      box-shadow: none;
+      &:hover {
+        box-shadow: none;
+        border-color: #fd00ff !important;
+        transition: 0.3s;
+      }
+    }
     .table-data:nth-of-type(odd) {
       &:hover {
         background: #fd00ff;
@@ -114,6 +136,10 @@ export const globalStyles = css`
 
     .payment-type {
       align-items: center !important;
+    }
+    p {
+      text-align: center !important;
+      }
     }
 
     // animations
